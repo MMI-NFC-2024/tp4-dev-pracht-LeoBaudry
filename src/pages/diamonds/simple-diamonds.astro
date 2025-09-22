@@ -1,0 +1,30 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <h1>💎 Diamonds - Simple</h1>
+  <p>Graphique des diamants : carat vs prix, coloré par coupe (cut)</p>
+  
+  <div id="diamondplot"></div>
+
+  <script>
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+    import diamonds from "../../assets/diamonds.json";
+
+    const plot = Plot.plot({
+      marks: [
+        Plot.dot(diamonds, {
+          x: "carat",
+          y: "price",
+          stroke: "cut",
+          r: 2,
+          opacity: 0.6,
+        }),
+      ],
+      grid: true,
+    });
+
+    document.querySelector("#diamondplot")?.append(plot);
+  </script>
+</Layout>

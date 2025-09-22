@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <h1>💎 Diamonds - Avec Filtre</h1>
+  
+  <div style="margin: 20px 0;">
+    <label for="cut">Coupe :</label>
+    <select name="cut" id="cut">
+      <option value="">Toutes les coupes</option>
+      <option value="Fair">Fair</option>
+      <option value="Good">Good</option>
+      <option value="Very Good">Very Good</option>
+      <option value="Premium">Premium</option>
+      <option value="Ideal">Ideal</option>
+    </select>
+  </div>
+  
+  <div id="diamondplot"></div>
+
+  <script>
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+    import diamonds from "../../assets/diamonds.json";
+    
+    const selectCut = document.querySelector("#cut");
+    
+    function renderPlot() {
+      const cut = selectCut.value;
+      const plotDiv = document.querySelector("#diamondplot");
+      plotDiv.innerHTML = "";
+      
+      const filteredDiamonds = cut ? diamonds.filter(d => d.cut === cut) : diamonds;
+      
+      const plot = Plot.plot({
+        marks: [
+          Plot.dot(filteredDiamonds, {
+            x: "carat",
+            y: "price",
+            stroke: "cut",
+            r: 2,
+            opacity: 0.7,
+          }),
+        ],
+        grid: true,
+      });
+      
+      plotDiv.append(plot);
+    }
+    
+    selectCut.addEventListener("change", renderPlot);
+    renderPlot();
+  </script>
+</Layout>

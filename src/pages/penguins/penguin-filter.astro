@@ -1,0 +1,48 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <h1>TP4 - Penguin avec Filtre</h1>
+  
+  <div style="margin: 20px 0;">
+    <label for="species">Espèce :</label>
+    <select name="species" id="species">
+      <option value="">All species</option>
+      <option value="Adelie">Adelie</option>
+      <option value="Chinstrap">Chinstrap</option>
+      <option value="Gentoo">Gentoo</option>
+    </select>
+  </div>
+  
+  <div id="penguinplot"></div>
+
+  <script>
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+    import penguins from "../../assets/penguins.json";
+    
+    const selectSpecies = document.querySelector("#species") as HTMLSelectElement;
+    
+    function renderPlot() {
+      if (!selectSpecies) return;
+      const species = selectSpecies.value;
+      const plotDiv = document.querySelector("#penguinplot");
+      
+      if (!plotDiv) return;
+      plotDiv.innerHTML = "";
+      const filteredPenguins = species ? penguins.filter(p => p.species === species) : penguins;
+      const plot = Plot.plot({
+        marks: [
+          Plot.dot(filteredPenguins, {
+            x: "culmen_length_mm", 
+            y: "culmen_depth_mm",  
+            stroke: "species",     
+          }),
+        ],
+      });
+      plotDiv.append(plot);
+    }
+    selectSpecies.addEventListener("change", renderPlot);
+    renderPlot();
+  </script>
+</Layout>

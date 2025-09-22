@@ -11,21 +11,67 @@ import "../styles/global.css";
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics - TP4</title>
   </head>
-  <body>
-    <nav class="flex items-center justify-between p-4 bg-gray-100 shadow-md">
-      <h2 class="text-xl font-bold text-gray-800">TP4 - Navigation</h2>
-      <ul class="flex space-x-6">
-      <li><a href="/" class="text-black font-regular hover:text-gray-600 transition-colors">Accueil</a></li>
-      <li><a href="/simple" class="text-black font-regular hover:text-gray-600 transition-colors">Simple</a></li>
-      <li><a href="/simple-penguin" class="text-black font-regular hover:text-gray-600 transition-colors">Penguin Simple</a></li>
-            <li><a href="/penguin-filter" class="text-black font-regular hover:text-gray-600 transition-colors">Penguin Filtre</a></li>
+  <body class="bg-gray-50 min-h-screen flex">
+    <!-- NAVIGATION -->
+    <nav class="w-64 p-4 bg-gray-100 shadow-md h-screen overflow-y-auto">
+      <h2 class="text-xl font-bold text-gray-800 mb-4">TP4 - Navigation</h2>
+      <ul class="space-y-2">
 
-      <li><a href="/simple-improved" class="text-black font-regular hover:text-gray-600 transition-colors">Simple Amélioré</a></li>
-      <li><a href="/penguin-multi-filter" class="text-black font-regular hover:text-gray-600 transition-colors">Penguin Multi-Filtres</a></li>
+        <!-- Accueil et Simple -->
+        <li>
+          <a href="/" class="text-black hover:text-gray-600 transition-colors">🏠 Accueil</a>
+        </li>
+        <li>
+          <a href="/simple" class="text-black hover:text-gray-600 transition-colors">🔹 Simple</a>
+        </li>
+
+        <!-- Penguins -->
+        <li>
+          <details class="group">
+            <summary class="cursor-pointer text-black font-semibold hover:text-gray-600 transition-colors">
+              🐧 Penguins
+            </summary>
+            <ul class="ml-4 mt-1 list-disc space-y-1">
+              <li><a href="/penguins/simple-penguin" class="text-black hover:text-gray-600 transition-colors">Simple Penguin</a></li>
+              <li><a href="/penguins/penguin-filter" class="text-black hover:text-gray-600 transition-colors">Penguin Filtre</a></li>
+              <li><a href="/penguins/penguin-multi-filter" class="text-black hover:text-gray-600 transition-colors">Penguin Multi-Filtres</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <!-- Diamonds -->
+        <li>
+          <details class="group">
+            <summary class="cursor-pointer text-black font-semibold hover:text-gray-600 transition-colors">
+              💎 Diamonds
+            </summary>
+            <ul class="ml-4 mt-1 list-disc space-y-1">
+              <li><a href="/diamonds/simple-diamonds" class="text-black hover:text-gray-600 transition-colors">Simple Diamonds</a></li>
+              <li><a href="/diamonds/diamonds-filter" class="text-black hover:text-gray-600 transition-colors">Diamonds Filtre</a></li>
+              <li><a href="/diamonds/diamonds-multi-filter" class="text-black hover:text-gray-600 transition-colors">Diamonds Multi-Filtres</a></li>
+            </ul>
+          </details>
+        </li>
+
+        <!-- Cars -->
+        <li>
+          <details class="group">
+            <summary class="cursor-pointer text-black font-semibold hover:text-gray-600 transition-colors">
+              🚗 Cars
+            </summary>
+            <ul class="ml-4 mt-1 list-disc space-y-1">
+              <li><a href="/cars/simple-cars" class="text-black hover:text-gray-600 transition-colors">Simple Cars</a></li>
+              <li><a href="/cars/cars-filter" class="text-black hover:text-gray-600 transition-colors">Cars Filtre</a></li>
+              <li><a href="/cars/cars-multi-filter" class="text-black hover:text-gray-600 transition-colors">Cars Multi-Filtres</a></li>
+            </ul>
+          </details>
+        </li>
+
       </ul>
     </nav>
-    
-    <main>
+
+    <!-- CONTENU -->
+    <main class="flex-1 p-4">
       <slot />
     </main>
   </body>
