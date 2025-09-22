@@ -23,11 +23,13 @@ import Layout from "../../layouts/Layout.astro";
     import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
     import diamonds from "../../assets/diamonds.json";
     
-    const selectCut = document.querySelector("#cut");
+    const selectCut = document.querySelector("#cut") as HTMLSelectElement;
     
     function renderPlot() {
-      const cut = selectCut.value;
+      const cut = selectCut?.value || "";
       const plotDiv = document.querySelector("#diamondplot");
+      if (!plotDiv) return;
+      
       plotDiv.innerHTML = "";
       
       const filteredDiamonds = cut ? diamonds.filter(d => d.cut === cut) : diamonds;
@@ -45,10 +47,14 @@ import Layout from "../../layouts/Layout.astro";
         grid: true,
       });
       
-      plotDiv.append(plot);
+      if (plotDiv) {
+        plotDiv.append(plot);
+      }
     }
     
-    selectCut.addEventListener("change", renderPlot);
-    renderPlot();
+    if (selectCut) {
+      selectCut.addEventListener("change", renderPlot);
+      renderPlot();
+    }
   </script>
 </Layout>

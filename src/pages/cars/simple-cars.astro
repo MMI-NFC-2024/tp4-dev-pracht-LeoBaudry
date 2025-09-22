@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout>
+  <h1>🚗 Cars - Simple</h1>
+  <p>Graphique des voitures : puissance vs consommation, coloré par cylindres</p>
+  
+  <div id="carplot"></div>
+
+  <script>
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+    import cars from "../../assets/cars.json";
+
+    const plot = Plot.plot({
+      marks: [
+        Plot.dot(cars, {
+          x: "power (hp)",       // correspond à Horsepower
+          y: "economy (mpg)",    // correspond à Miles_per_Gallon
+          stroke: "cylinders",   // couleur selon le nombre de cylindres
+          r: 3,
+          opacity: 0.6,
+        }),
+      ],
+      grid: true,
+    });
+
+    document.querySelector("#carplot")?.append(plot);
+  </script>
+</Layout>

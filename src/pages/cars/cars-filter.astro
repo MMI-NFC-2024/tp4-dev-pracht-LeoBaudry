@@ -1,0 +1,54 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout>
+  <h1>🚗 Cars - Avec Filtre</h1>
+  
+  <div style="margin: 20px 0;">
+    <label for="cylinders">Nombre de cylindres :</label>
+    <select id="cylinders">
+      <option value="">Tous</option>
+      <option value="4">4</option>
+      <option value="6">6</option>
+      <option value="8">8</option>
+    </select>
+  </div>
+  
+  <div id="carplot"></div>
+
+  <script>
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+    import cars from "../../assets/cars.json";
+
+    const selectCylinders = document.querySelector("#cylinders") as HTMLSelectElement;
+
+    function renderPlot() {
+      const cyl = selectCylinders.value;
+      const plotDiv = document.querySelector("#carplot");
+      if (!plotDiv) return;
+      plotDiv.innerHTML = "";
+
+      const filtered = (cyl ? cars.filter(c => String(c.cylinders) === cyl) : cars)
+        .filter(c => c["power (hp)"] != null && c["economy (mpg)"] != null);
+
+      const plot = Plot.plot({
+        marks: [
+          Plot.dot(filtered, {
+            x: "power (hp)",
+            y: "economy (mpg)",
+            stroke: "cylinders",
+            r: 3,
+            opacity: 0.8
+          }),
+        ],
+        grid: true
+      });
+
+      plotDiv.append(plot);
+    }
+
+    selectCylinders.addEventListener("change", renderPlot);
+    renderPlot();
+  </script>
+</Layout>
